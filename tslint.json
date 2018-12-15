@@ -7,6 +7,7 @@
     "quotemark": [true, "single", "avoid-template"],
     "semicolon": [true, "always"],
     "object-literal-sort-keys": false,
-    "eofline": true
+    "eofline": true,
+    "interface-name": false
   }
 }

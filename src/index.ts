@@ -1,1 +1,1 @@
-export * from './lib/reply';
+export * from './reply';

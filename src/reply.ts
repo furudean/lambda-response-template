@@ -1,3 +1,25 @@
+interface HttpHeaders {
+  [key: string]: string | boolean | number;
+}
+
+interface ReplyDefaults {
+  headers: HttpHeaders;
+}
+
+interface ReplyOptions {
+  headers?: HttpHeaders;
+  multiValueHeaders?: { [key: string]: string[]; };
+  isBase64Encoded?: boolean;
+}
+
+interface LambdaResponseObject {
+  statusCode: number;
+  body: string;
+  headers?: HttpHeaders;
+  multiValueHeaders?: { [key: string]: string[]; };
+  isBase64Encoded?: boolean;
+}
+
 export class LambdaReply {
   public defaults: ReplyDefaults;
 
