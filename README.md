@@ -58,9 +58,9 @@ const reply = new LambdaReply(defaults);
 
 #### defaults
 
-Defaults for all replies made using this object.
-
 Type: `object`
+
+Defaults for all replies made using this object.
 
 ```typescript
 {
