@@ -1,7 +1,7 @@
 {
   "name": "aws-lambda-reply",
   "version": "0.0.2",
-  "description": "A tiny utility for creating AWS Lambda response objects.",
+  "description": "💬 A tiny utility for creating AWS Lambda response objects.",
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc -p tsconfig.json",
@@ -20,6 +20,7 @@
     "url": "https://github.com/c-bandy/aws-lambda-reply/issues"
   },
   "homepage": "https://github.com/c-bandy/aws-lambda-reply#readme",
+  "keywords": ["AWS", "lambda", "response", "helper", "CORS", "http"],
   "release-it": {
     "git": {
       "release": true,
