@@ -4,7 +4,7 @@ interface HttpHeaders {
 
 interface ReplyDefaults {
   headers: HttpHeaders;
-  multiValueHeaders?: { [key: string]: string[]; };
+  multiValueHeaders: { [key: string]: string[]; };
 }
 
 interface ReplyOptions {
@@ -35,9 +35,11 @@ export class LambdaReply {
       'Content-Type': 'application/json',
     };
 
+    const multiValueHeaders = defaults.multiValueHeaders || {};
+
     this.defaults = {
       headers,
-      multiValueHeaders: defaults.multiValueHeaders,
+      multiValueHeaders,
     };
   }
 
@@ -49,17 +51,18 @@ export class LambdaReply {
    * @param options - Customize the response. Overwrite headers or set the response as base64 encoded.
    */
   public make(statusCode: number, body: string, options: ReplyOptions = {}): LambdaResponseObject {
-    const { headers, isBase64Encoded, multiValueHeaders } = options;
-
     return {
       statusCode,
       body,
       headers: {
         ...this.defaults.headers, // set defaults
-        ...headers, // spread specified headers
+        ...(options.headers || {}), // spread specified headers
       },
-      isBase64Encoded,
-      multiValueHeaders,
+      isBase64Encoded: options.isBase64Encoded,
+      multiValueHeaders: {
+        ...this.defaults.multiValueHeaders,
+        ...(options.multiValueHeaders || {}),
+      },
     };
   }
 }
