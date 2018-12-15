@@ -70,7 +70,8 @@ Defaults for all replies made using this object.
 
 ```typescript
 {
-  headers?: { [key: string]: string | boolean | number }
+  headers?: { [key: string]: string | boolean | number },
+  multiValueHeaders?: { [key: string]: string[] }
 }
 ```
 
@@ -103,7 +104,7 @@ Customize the response. Overwrite headers or set the response as base64 encoded.
 ```typescript
 {
   headers?: { [key: string]: string | boolean | number },
-  multiValueHeaders?: { [key: string]: string[]; },
+  multiValueHeaders?: { [key: string]: string[] },
   isBase64Encoded?: boolean,
 }
 ```
@@ -116,8 +117,8 @@ Type: `object`
 {
   statusCode: number,
   body: string,
-  headers?: { [key: string]: string[]; },
-  multiValueHeaders?: { [key: string]: string[]; },
+  headers?: { [key: string]: string[] },
+  multiValueHeaders?: { [key: string]: string[] },
   isBase64Encoded?: boolean
 }
 ```
