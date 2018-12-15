@@ -4,6 +4,7 @@ interface HttpHeaders {
 
 interface ReplyDefaults {
   headers: HttpHeaders;
+  multiValueHeaders?: { [key: string]: string[]; };
 }
 
 interface ReplyOptions {
@@ -26,18 +27,17 @@ export class LambdaReply {
   /**
    * Creates a new reply object.
    *
-   * @param defaults - The defaults to apply for each reply made using this reply object.
+   * @param defaults - The defaults to apply for each response made using this reply object.
    */
   constructor(defaults: Partial<ReplyDefaults> = {}) {
-    let { headers } = defaults;
-
     // set initial values
-    headers = headers || {
+    const headers = defaults.headers || {
       'Content-Type': 'application/json',
     };
 
     this.defaults = {
       headers,
+      multiValueHeaders: defaults.multiValueHeaders,
     };
   }
 
