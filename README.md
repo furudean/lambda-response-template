@@ -2,6 +2,9 @@
 
 >💬 A tiny utility for creating AWS Lambda response objects.
 
+aws-lamba-reply module provides an easy way for you set default headers for your lambda functions. Helps reduce clutter 
+and make your output more consistent in large scale applications.
+
 ## Install
 
 ```bash
@@ -10,12 +13,15 @@ $ npm install aws-lambda-reply
 
 ## Why
 
-Setting up service-wide headers can quicky add clutter. I wanted to simplify this process by creating a minimal
-module which allows you to set the headers only once, but use multiple times across your function code.
+When developing large applications you often work across multiple repositories. I found myself following the same
+pattern of creating a factory in each repository every time I wanted set standards for a lambda's output. Without a
+centralized way to do this, you you often tend to make mistakes for the less common, and less tested code paths -
+aws-lambda-reply is my effort to try and minimize this lazyness by forcing you to write outputs that follow a standard
+format.
 
 ## Usage
 
-Set up LambdaReply with your defaults:
+Set up aws-lambda-reply with your defaults:
 
 ```javascript
 import { LambdaReply } from 'aws-lambda-reply';
