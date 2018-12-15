@@ -1,6 +1,6 @@
 {
   "name": "aws-lambda-reply",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "💬 A tiny utility for creating AWS Lambda response objects.",
   "main": "dist/index.js",
   "scripts": {
