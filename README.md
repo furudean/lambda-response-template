@@ -117,7 +117,7 @@ Type: `object`
 {
   statusCode: number,
   body: string,
-  headers?: { [key: string]: string[] },
+  headers?: { [key: string]: string | boolean | number },
   multiValueHeaders?: { [key: string]: string[] },
   isBase64Encoded?: boolean
 }
