@@ -1,5 +1,7 @@
 # aws-lamba-reply
 
+[![dependencies Status](https://david-dm.org/c-bandy/lambda-response-helper/status.svg)](https://david-dm.org/c-bandy/lambda-response-helper)
+
 >💬 A tiny utility for creating AWS Lambda response objects.
 
 This package provides an easy way for you set default headers for your lambda functions. Helps reduce clutter and make
