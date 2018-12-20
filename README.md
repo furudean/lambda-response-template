@@ -1,6 +1,6 @@
 # aws-lamba-reply
 
-[![dependencies Status](https://david-dm.org/c-bandy/lambda-response-helper/status.svg)](https://david-dm.org/c-bandy/lambda-response-helper)
+[![dependencies Status](https://david-dm.org/c-bandy/aws-lambda-reply/status.svg)](https://david-dm.org/c-bandy/aws-lambda-reply)
 
 >💬 A tiny utility for creating AWS Lambda response objects.
 
