@@ -15,7 +15,7 @@ $ npm install aws-lambda-reply
 
 When developing large applications you often work across multiple repositories. I found myself following the same
 pattern of creating a factory in each repository every time I wanted set standards for a lambda's output. When you also
-have to add tests for this boilerplate for each copy it can quickly get annoying - this package intends to solve this 
+have to add tests for this boilerplate it can quickly get annoying - this package intends to solve this 
 problem by creating a first class, best version of this generic method, that is easily accessible as a module.
 
 ## Usage
