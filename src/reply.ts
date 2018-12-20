@@ -2,12 +2,12 @@ interface HttpHeaders {
   [key: string]: string | boolean | number;
 }
 
-interface ReplyDefaults {
+interface LambdaReplyDefaults {
   headers: HttpHeaders;
   multiValueHeaders: { [key: string]: string[]; };
 }
 
-interface ReplyOptions {
+interface LambdaReplyOptions {
   headers?: HttpHeaders;
   multiValueHeaders?: { [key: string]: string[]; };
   isBase64Encoded?: boolean;
@@ -22,14 +22,14 @@ interface LambdaResponseObject {
 }
 
 export class LambdaReply {
-  public defaults: ReplyDefaults;
+  public defaults: LambdaReplyDefaults;
 
   /**
    * Creates a new reply object.
    *
    * @param defaults - The defaults to apply for each response made using this reply object.
    */
-  constructor(defaults: Partial<ReplyDefaults> = {}) {
+  constructor(defaults: Partial<LambdaReplyDefaults> = {}) {
     // set initial values
     const headers = defaults.headers || {
       'Content-Type': 'application/json',
@@ -50,7 +50,7 @@ export class LambdaReply {
    * @param body - The response body to return.
    * @param options - Customize the response. Overwrite headers or set the response as base64 encoded.
    */
-  public make(statusCode: number, body: string, options: ReplyOptions = {}): LambdaResponseObject {
+  public make(statusCode: number, body: string, options: LambdaReplyOptions = {}): LambdaResponseObject {
     return {
       statusCode,
       body,
