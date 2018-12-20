@@ -40,7 +40,6 @@
       "release": true
     }
   },
-  "dependencies": {},
   "devDependencies": {
     "@types/node": "^10.12.15",
     "release-it": "^9.1.0",
