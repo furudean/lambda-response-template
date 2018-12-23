@@ -2,7 +2,7 @@ export interface HttpHeaders {
   [key: string]: string | boolean | number;
 }
 
-export interface MultiValueHeaders { [key: string]: string[]; }
+export interface MultiValueHeaders { [key: string]: Array<string | boolean | number>; }
 
 export interface LambdaReplyDefaults {
   headers: HttpHeaders;
