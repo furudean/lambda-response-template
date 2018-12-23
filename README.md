@@ -2,6 +2,7 @@
 
 [![Build Status](https://travis-ci.com/c-bandy/aws-lambda-reply.svg?branch=master)](https://travis-ci.com/c-bandy/aws-lambda-reply)
 [![dependencies Status](https://david-dm.org/c-bandy/aws-lambda-reply/status.svg)](https://david-dm.org/c-bandy/aws-lambda-reply)
+[![codecov](https://codecov.io/gh/c-bandy/aws-lambda-reply/branch/master/graph/badge.svg)](https://codecov.io/gh/c-bandy/aws-lambda-reply)
 
 >💬 A tiny utility for creating AWS Lambda response objects.
 
