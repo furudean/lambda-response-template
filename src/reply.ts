@@ -39,16 +39,12 @@ export class LambdaReply {
    * ```
    */
   constructor(defaults: Partial<LambdaReplyDefaults> = {}) {
-    // set initial values
-    const headers = defaults.headers || {
-      'Content-Type': 'application/json',
-    };
-
-    const multiValueHeaders = defaults.multiValueHeaders || {};
-
     this.defaults = {
-      headers,
-      multiValueHeaders,
+      headers: {
+        'Content-Type': 'application/json',
+        ...(defaults.headers || {}),
+      },
+      multiValueHeaders: (defaults.multiValueHeaders || {}),
     };
   }
 
