@@ -25,9 +25,18 @@ export class LambdaReply {
   public defaults: LambdaReplyDefaults;
 
   /**
-   * Creates a new reply object.
+   * Create a new reply instance with the selected default headers.
    *
-   * @param defaults - The defaults to apply for each response made using this reply object.
+   * @param defaults
+   * The defaults to apply for each response made using this reply object.
+   *
+   * Default values are:
+   * ```javascript
+   * {
+   *   headers: { 'Content-Type': 'application/json' },
+   *   multiValueHeaders: {}
+   * }
+   * ```
    */
   constructor(defaults: Partial<LambdaReplyDefaults> = {}) {
     // set initial values
@@ -44,7 +53,7 @@ export class LambdaReply {
   }
 
   /**
-   * Creates a AWS Lambda response object.
+   * Create a AWS Lambda response object.
    *
    * @param statusCode - HTTP status code
    * @param body - The response body to return.

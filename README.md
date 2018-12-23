@@ -10,15 +10,15 @@ your output more consistent in large scale applications.
 ## Install
 
 ```bash
-$ npm install aws-lambda-reply
+npm install aws-lambda-reply
 ```
 
 ## Why
 
 When developing large applications you often work across multiple repositories. I found myself following the same
 pattern of creating a factory in each repository every time I wanted set standards for a lambda's output. When you also
-have to add tests for this boilerplate it can quickly get annoying - this package intends to solve this 
-problem by creating a first class, best version of this generic method, that is easily accessible as a module.
+have to add tests for this boilerplate it can quickly get annoying - this package intends to solve this problem by
+creating a first class, best version of this generic method, that is easily accessible as a module.
 
 ## Usage
 
@@ -27,7 +27,7 @@ Set up aws-lambda-reply with your defaults:
 ```javascript
 import { LambdaReply } from 'aws-lambda-reply';
 
-const reply = new LambdaReply({
+const Reply = new LambdaReply({
   headers: {
     'x-powered-by': 'nodejs',
   }
@@ -37,11 +37,12 @@ const reply = new LambdaReply({
 And then use inside your function:
 
 ```javascript
-function handler(event, context, callback) {
-  const response = reply.make(200, '{"message": "Hello world!"}');
-  callback(null, response);
+function handler(event, context) {
+  return Reply.make(200, '{"message": "Hello world!"}');
 }
 ```
+
+Your headers will automatically be added to the response object, along with any additional headers you pass.
 
 ## API
 
@@ -56,10 +57,10 @@ const LambdaReply = require('aws-lambda-reply').LambdaReply;
 ---
 
 ```javascript
-const reply = new LambdaReply(defaults);
+const Reply = new LambdaReply(defaults);
 ```
 
->This API assumes that you call the object `reply`, but you can call it anything you want.
+>This API assumes that you name the instance `Reply`, but you can call it anything you like.
 
 ### Constructor
 
@@ -68,6 +69,10 @@ const reply = new LambdaReply(defaults);
 Type: `object`
 
 Defaults for all replies made using this object.
+
+`headers` default to `{ 'Content-Type': 'application/json' }`.
+
+`multiValueHeaders` default to `{}`.
 
 ```typescript
 {
