@@ -1,5 +1,6 @@
 # aws-lamba-reply
 
+[![Build Status](https://travis-ci.com/c-bandy/aws-lambda-reply.svg?branch=master)](https://travis-ci.com/c-bandy/aws-lambda-reply)
 [![dependencies Status](https://david-dm.org/c-bandy/aws-lambda-reply/status.svg)](https://david-dm.org/c-bandy/aws-lambda-reply)
 
 >💬 A tiny utility for creating AWS Lambda response objects.
@@ -84,7 +85,7 @@ Defaults for all replies made using this object.
 ---
 
 ```js
-reply.make(statusCode, body, options);
+Reply.make(statusCode, body, options);
 ```
 
 ### Params

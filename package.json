@@ -8,7 +8,9 @@
     "lint": "tslint -p tsconfig.json",
     "prepare": "npm run build",
     "release": "release-it",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha test/**/*.spec.ts --opts mocha.opts",
+    "test-with-coverage": "nyc npm test",
+    "beforeStart": "npm run test-with-coverage"
   },
   "repository": {
     "type": "git",
@@ -41,8 +43,15 @@
     }
   },
   "devDependencies": {
+    "@types/chai": "^4.1.7",
+    "@types/mocha": "^5.2.5",
     "@types/node": "^10.12.15",
+    "chai": "^4.2.0",
+    "codecov": "^3.1.0",
+    "mocha": "^5.2.0",
+    "nyc": "^13.1.0",
     "release-it": "^9.1.0",
+    "ts-node": "^7.0.1",
     "tslint": "^5.11.0",
     "typescript": "^3.2.2"
   }

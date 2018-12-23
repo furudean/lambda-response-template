@@ -1,0 +1,17 @@
+{
+  "check-coverage": true,
+  "lines": 100,
+  "per-file": true,
+  "extension": [
+    ".ts"
+  ],
+  "require": [
+    "ts-node/register"
+  ],
+  "include": [
+    "src/**/*.ts"
+  ],
+  "exclude": [
+    "**/*.d.ts"
+  ]
+}
