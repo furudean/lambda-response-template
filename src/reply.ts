@@ -2,14 +2,16 @@ export interface HttpHeaders {
   [key: string]: string | boolean | number;
 }
 
+export interface MultiValueHeaders { [key: string]: string[]; }
+
 export interface LambdaReplyDefaults {
   headers: HttpHeaders;
-  multiValueHeaders: { [key: string]: string[]; };
+  multiValueHeaders: MultiValueHeaders;
 }
 
 export interface LambdaReplyOptions {
   headers?: HttpHeaders;
-  multiValueHeaders?: { [key: string]: string[]; };
+  multiValueHeaders?: MultiValueHeaders;
   isBase64Encoded?: boolean;
 }
 
@@ -17,7 +19,7 @@ export interface LambdaResponseObject {
   statusCode: number;
   body: string;
   headers?: HttpHeaders;
-  multiValueHeaders?: { [key: string]: string[]; };
+  multiValueHeaders?: MultiValueHeaders;
   isBase64Encoded?: boolean;
 }
 
