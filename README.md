@@ -25,7 +25,7 @@ creating a first class, best version of this generic method, that is easily acce
 
 Set up aws-lambda-reply with your defaults:
 
-```javascript
+```typescript
 import { LambdaReply } from 'aws-lambda-reply';
 
 const Reply = new LambdaReply({
@@ -37,7 +37,7 @@ const Reply = new LambdaReply({
 
 And then use inside your function:
 
-```javascript
+```typescript
 function handler(event, context) {
   return Reply.make(200, '{"message": "Hello world!"}');
 }
@@ -47,7 +47,7 @@ Your headers will automatically be added to the response object, along with any 
 
 ## API
 
-```js
+```typescript
 // ES6
 import { LambdaReply } from 'aws-lambda-reply';
 
@@ -57,7 +57,7 @@ const LambdaReply = require('aws-lambda-reply').LambdaReply;
 
 ---
 
-```javascript
+```typescript
 const Reply = new LambdaReply(defaults);
 ```
 
@@ -84,7 +84,7 @@ Defaults for all replies made using this object.
 
 ---
 
-```js
+```typescript
 Reply.make(statusCode, body, options);
 ```
 
@@ -111,7 +111,7 @@ Add additional headers or set the response as base64 encoded.
 ```typescript
 {
   headers?: { [key: string]: string | boolean | number },
-  multiValueHeaders?: { [key: string]: string[] },
+  multiValueHeaders?: { [key: string]: Array<string | boolean | number> },
   isBase64Encoded?: boolean,
 }
 ```
@@ -125,7 +125,7 @@ Type: `object`
   statusCode: number,
   body: string,
   headers?: { [key: string]: string | boolean | number },
-  multiValueHeaders?: { [key: string]: string[] },
+  multiValueHeaders?: { [key: string]: Array<string | boolean | number> },
   isBase64Encoded?: boolean
 }
 ```
