@@ -1,19 +1,19 @@
-interface HttpHeaders {
+export interface HttpHeaders {
   [key: string]: string | boolean | number;
 }
 
-interface LambdaReplyDefaults {
+export interface LambdaReplyDefaults {
   headers: HttpHeaders;
   multiValueHeaders: { [key: string]: string[]; };
 }
 
-interface LambdaReplyOptions {
+export interface LambdaReplyOptions {
   headers?: HttpHeaders;
   multiValueHeaders?: { [key: string]: string[]; };
   isBase64Encoded?: boolean;
 }
 
-interface LambdaResponseObject {
+export interface LambdaResponseObject {
   statusCode: number;
   body: string;
   headers?: HttpHeaders;
