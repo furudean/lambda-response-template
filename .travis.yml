@@ -1,7 +1,7 @@
 language: node_js
 node_js:
   - node
-scripts:
+script:
   - npm run build
   - npm run lint
   - npm run test-with-coverage
