@@ -29,7 +29,7 @@ Set up aws-lambda-reply with your defaults:
 ```typescript
 import { LambdaReply } from 'aws-lambda-reply';
 
-const Reply = new LambdaReply({
+const reply = new LambdaReply({
   headers: {
     'x-powered-by': 'nodejs',
   }
@@ -40,7 +40,7 @@ And then use inside your function:
 
 ```typescript
 function handler(event, context) {
-  return Reply.make(200, '{"message": "Hello world!"}');
+  return reply.make(200, '{"message": "Hello world!"}');
 }
 ```
 
@@ -59,10 +59,10 @@ const LambdaReply = require('aws-lambda-reply').LambdaReply;
 ---
 
 ```typescript
-const Reply = new LambdaReply(defaults);
+const reply = new LambdaReply(defaults);
 ```
 
->This API assumes that you name the instance `Reply`, but you can call it anything you like.
+>This API assumes that you name the instance `reply`, but you can call it anything you like.
 
 ### Constructor
 
@@ -86,7 +86,7 @@ Defaults for all replies made using this object.
 ---
 
 ```typescript
-Reply.make(statusCode, body, options);
+reply.make(statusCode, body, options);
 ```
 
 ### Params
