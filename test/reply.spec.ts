@@ -2,7 +2,7 @@ import { expect } from 'chai';
 import { LambdaReply } from '../src/reply';
 
 describe('Constructor', () => {
-  it('should set default headers properly', () => {
+  it('should set headers properly', () => {
     const headers = { 'x-something': true };
     const Reply = new LambdaReply({
       headers,
@@ -13,7 +13,7 @@ describe('Constructor', () => {
       ...headers,
     });
   });
-  it('should set default multiValueHeaders properly', () => {
+  it('should set multiValueHeaders properly', () => {
     const multiValueHeaders = { 'x-something': ['awesome', 'sauce'] };
     const Reply = new LambdaReply({
       multiValueHeaders,
@@ -21,7 +21,7 @@ describe('Constructor', () => {
     const responseObject = Reply.make(404, 'Something not found');
     expect(responseObject.multiValueHeaders).to.be.an('object').that.deep.equals(multiValueHeaders);
   });
-  it('should set default values for default headers', () => {
+  it('should set initial values for headers', () => {
     const Reply = new LambdaReply();
     const responseObject = Reply.make(200, '');
     expect(responseObject.headers).to.be.an('object').that.deep.equals({ 'Content-Type': 'application/json' });
