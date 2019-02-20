@@ -43,6 +43,12 @@ describe('make', () => {
 
     expect(responseObject.body).to.be.a('string').that.equals(body);
   });
+  it('undefined body should be set to \'\'', () => {
+    const Reply = new LambdaReply();
+    const responseObject = Reply.make(200);
+
+    expect(responseObject.body).to.be.a('string').that.equals('');
+  });
   describe('options', () => {
     it('should set isBase64Encoded', () => {
       const Reply = new LambdaReply();

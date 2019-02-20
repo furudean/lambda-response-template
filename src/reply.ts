@@ -57,7 +57,7 @@ export class LambdaReply {
    * @param body - The response body to return.
    * @param options - Customize the response. Overwrite headers or set the response as base64 encoded.
    */
-  public make(statusCode: number, body: string, options: LambdaReplyOptions = {}): LambdaResponseObject {
+  public make(statusCode: number, body: string = '', options: LambdaReplyOptions = {}): LambdaResponseObject {
     return {
       statusCode,
       body,
