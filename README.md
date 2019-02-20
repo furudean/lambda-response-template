@@ -39,12 +39,12 @@ const reply = new LambdaReply({
 And then use inside your function:
 
 ```typescript
-function handler(event, context) {
+async function handler(event, context) {
   return reply.make(200, '{"message": "Hello world!"}');
 }
 ```
 
-Your headers will automatically be added to the response object, along with any additional headers you pass.
+Your headers will automatically be added to the response object, along with any additional options you pass.
 
 ## API
 
