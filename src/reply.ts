@@ -7,6 +7,7 @@ export interface MultiValueHeaders { [key: string]: Array<string | boolean | num
 export interface LambdaReplyDefaults {
   headers: HttpHeaders;
   multiValueHeaders: MultiValueHeaders;
+  isBase64Encoded: boolean;
 }
 
 export interface LambdaReplyOptions {
@@ -27,18 +28,9 @@ export class LambdaReply {
   public defaults: LambdaReplyDefaults;
 
   /**
-   * Create a new reply instance with the selected default headers.
+   * Creates a reply template with the selected defaults.
    *
-   * @param defaults
-   * The defaults to apply for each response made using this reply object.
-   *
-   * Default values are:
-   * ```javascript
-   * {
-   *   headers: { 'Content-Type': 'application/json' },
-   *   multiValueHeaders: {}
-   * }
-   * ```
+   * @param defaults - The defaults to apply for each response made using this template.
    */
   constructor(defaults: Partial<LambdaReplyDefaults> = {}) {
     this.defaults = {
@@ -47,6 +39,7 @@ export class LambdaReply {
         ...(defaults.headers || {}),
       },
       multiValueHeaders: (defaults.multiValueHeaders || {}),
+      isBase64Encoded: defaults.isBase64Encoded || false,
     };
   }
 
@@ -65,11 +58,11 @@ export class LambdaReply {
         ...this.defaults.headers, // set defaults
         ...(options.headers || {}), // spread specified headers
       },
-      isBase64Encoded: options.isBase64Encoded,
       multiValueHeaders: {
         ...this.defaults.multiValueHeaders,
         ...(options.multiValueHeaders || {}),
       },
+      isBase64Encoded: options.isBase64Encoded !== undefined ? options.isBase64Encoded : this.defaults.isBase64Encoded,
     };
   }
 }

@@ -27,6 +27,16 @@ describe('Constructor', () => {
     expect(responseObject.headers).to.be.an('object').that.deep.equals({ 'Content-Type': 'application/json' });
     expect(responseObject.multiValueHeaders).to.be.an('object').that.deep.equals({});
   });
+  it('should set isBase64Encoded properly', () => {
+    const Reply = new LambdaReply({ isBase64Encoded: true });
+    const responseObject = Reply.make(200);
+    expect(responseObject.isBase64Encoded).to.be.a('boolean').that.equals(true);
+  });
+  it('should set initial values for isBase64Encoded', () => {
+    const Reply = new LambdaReply();
+    const responseObject = Reply.make(200);
+    expect(responseObject.isBase64Encoded).to.be.a('boolean').that.equals(false);
+  });
 });
 describe('make', () => {
   it('should set statusCode', () => {
