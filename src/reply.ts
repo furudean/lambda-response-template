@@ -1,4 +1,4 @@
-import { isString } from './util';
+import { isString, lowercaseKeys as lk } from './util';
 
 export interface HttpHeaders {
   [key: string]: string | boolean | number;
@@ -64,7 +64,7 @@ export class LambdaReply {
       // Is a Content-Type header
       options = {
         headers: {
-          'Content-Type': optionsLike as string,
+          'content-type': optionsLike as string,
         },
       };
     } else if (optionsLike instanceof Object) {
@@ -79,12 +79,12 @@ export class LambdaReply {
       statusCode,
       body,
       headers: {
-        ...this.defaults.headers, // set defaults
-        ...(options.headers || {}), // spread specified headers
+        ...lk(this.defaults.headers), // set defaults
+        ...lk(options.headers || {}), // spread specified headers
       },
       multiValueHeaders: {
-        ...this.defaults.multiValueHeaders,
-        ...(options.multiValueHeaders || {}),
+        ...lk(this.defaults.multiValueHeaders),
+        ...lk(options.multiValueHeaders || {}),
       },
       isBase64Encoded: options.isBase64Encoded !== undefined ? options.isBase64Encoded : this.defaults.isBase64Encoded,
     };

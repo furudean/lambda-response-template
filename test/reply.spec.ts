@@ -9,7 +9,7 @@ describe('Constructor', () => {
     });
     const responseObject = Reply.make(404, 'Something not found');
     expect(responseObject.headers).to.be.an('object').that.deep.equals({
-      'Content-Type': 'application/json',
+      'content-type': 'application/json',
       ...headers,
     });
   });
@@ -24,7 +24,7 @@ describe('Constructor', () => {
   it('should set initial values for headers', () => {
     const Reply = new LambdaReply();
     const responseObject = Reply.make(200, '');
-    expect(responseObject.headers).to.be.an('object').that.deep.equals({ 'Content-Type': 'application/json' });
+    expect(responseObject.headers).to.be.an('object').that.deep.equals({ 'content-type': 'application/json' });
     expect(responseObject.multiValueHeaders).to.be.an('object').that.deep.equals({});
   });
   it('should set isBase64Encoded properly', () => {
@@ -72,7 +72,7 @@ describe('make', () => {
       const overwrite = { 'x-some-header': '*' };
       const responseObject = Reply.make(404, 'Something not found', { headers: overwrite });
       expect(responseObject.headers).to.be.an('object').that.deep.equals({
-        'Content-Type': 'application/json',
+        'content-type': 'application/json',
         ...overwrite,
       });
     });
@@ -89,7 +89,7 @@ describe('make', () => {
     const Reply = new LambdaReply({
       headers: {
         'a': 'b',
-        'Content-Type': 'text/plain',
+        'content-type': 'text/plain',
       },
     });
 
@@ -97,7 +97,24 @@ describe('make', () => {
 
     expect(responseObject.headers).to.deep.equal({
       'a': 'b',
-      'Content-Type': 'audio/mpeg',
+      'content-type': 'audio/mpeg',
+    });
+  });
+  it('should normalize header keys', () => {
+    const Reply = new LambdaReply({
+      headers: {
+        'X-Epic-Sauce': 'yeah',
+      },
+    });
+
+    const responseObject = Reply.make(200, undefined, {
+      headers: {'Some-Header': 'Sure'},
+    });
+
+    expect(responseObject.headers).to.deep.equal({
+      'content-type': 'application/json',
+      'x-epic-sauce': 'yeah',
+      'some-header': 'Sure',
     });
   });
 });
