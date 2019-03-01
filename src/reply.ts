@@ -30,9 +30,9 @@ export class LambdaReply {
   public defaults: LambdaReplyDefaults;
 
   /**
-   * Creates a reply template with the selected defaults.
+   * Creates a reply template with the selected options.
    *
-   * @param defaults - The defaults to apply for each response made using this template.
+   * @param defaults - Defaults to apply for each response made using this template.
    */
   constructor(defaults: Partial<LambdaReplyDefaults> = {}) {
     this.defaults = {
@@ -46,7 +46,7 @@ export class LambdaReply {
   }
 
   /**
-   * Create a AWS Lambda response object.
+   * Creates a response object from a template.
    *
    * @param statusCode - HTTP status code
    * @param body - The response body to return.
