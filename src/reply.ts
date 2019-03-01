@@ -1,3 +1,5 @@
+import { isString } from './util';
+
 export interface HttpHeaders {
   [key: string]: string | boolean | number;
 }
@@ -49,8 +51,30 @@ export class LambdaReply {
    * @param statusCode - HTTP status code
    * @param body - The response body to return.
    * @param options - Customize the response. Overwrite headers or set the response as base64 encoded.
+   * @param contentType - Set `Content-Type` header to this value.
    */
-  public make(statusCode: number, body: string = '', options: LambdaReplyOptions = {}): LambdaResponseObject {
+  public make(statusCode: number, body?: string, options?: LambdaReplyOptions): LambdaResponseObject;
+  public make(statusCode: number, body?: string, contentType?: string): LambdaResponseObject;
+  public make(statusCode: number, body: string = '', optionsLike?: LambdaReplyOptions | string):
+  LambdaResponseObject {
+    let options: LambdaReplyOptions;
+
+    // Determine if third argument is content type, undefined, or options.
+    if (isString(optionsLike)) {
+      // Is a Content-Type header
+      options = {
+        headers: {
+          'Content-Type': optionsLike as string,
+        },
+      };
+    } else if (optionsLike instanceof Object) {
+      // Is an options object.
+      options = optionsLike as LambdaReplyOptions;
+    } else {
+      // Is unknown, set as empty.
+      options = {};
+    }
+
     return {
       statusCode,
       body,

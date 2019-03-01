@@ -85,4 +85,19 @@ describe('make', () => {
       expect(responseObject.multiValueHeaders).to.be.an('object').that.deep.equals(overwrite);
     });
   });
+  it('should allow content-type instead of options', () => {
+    const Reply = new LambdaReply({
+      headers: {
+        'a': 'b',
+        'Content-Type': 'text/plain',
+      },
+    });
+
+    const responseObject = Reply.make(200, undefined, 'audio/mpeg');
+
+    expect(responseObject.headers).to.deep.equal({
+      'a': 'b',
+      'Content-Type': 'audio/mpeg',
+    });
+  });
 });

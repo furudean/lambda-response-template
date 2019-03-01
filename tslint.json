@@ -8,6 +8,7 @@
     "semicolon": [true, "always"],
     "object-literal-sort-keys": false,
     "eofline": true,
-    "interface-name": false
+    "interface-name": false,
+    "unified-signatures": false
   }
 }
