@@ -1,5 +1,5 @@
 {
-  "name": "aws-lambda-reply",
+  "name": "lambda-response-template",
   "version": "1.2.0",
   "description": "💬 A tiny utility for creating AWS Lambda response objects.",
   "main": "dist/index.js",
@@ -14,14 +14,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/c-bandy/aws-lambda-reply.git"
+    "url": "git+https://github.com/c-bandy/lambda-response-template.git"
   },
   "author": "Cassidy Bandy",
   "license": "Apache-2.0",
   "bugs": {
-    "url": "https://github.com/c-bandy/aws-lambda-reply/issues"
+    "url": "https://github.com/c-bandy/lambda-response-template/issues"
   },
-  "homepage": "https://github.com/c-bandy/aws-lambda-reply#readme",
+  "homepage": "https://github.com/c-bandy/lambda-response-template#readme",
   "keywords": [
     "AWS",
     "lambda",
@@ -54,5 +54,8 @@
     "ts-node": "^7.0.1",
     "tslint": "^5.11.0",
     "typescript": "^3.2.2"
+  },
+  "dependencies": {
+    "@types/aws-lambda": "^8.10.20"
   }
 }

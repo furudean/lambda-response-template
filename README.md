@@ -1,35 +1,43 @@
-# aws-lamba-reply
+# lambda-response-template
 
-[![Build Status](https://travis-ci.com/c-bandy/aws-lambda-reply.svg?branch=master)](https://travis-ci.com/c-bandy/aws-lambda-reply)
-[![dependencies Status](https://david-dm.org/c-bandy/aws-lambda-reply/status.svg)](https://david-dm.org/c-bandy/aws-lambda-reply)
-[![codecov](https://codecov.io/gh/c-bandy/aws-lambda-reply/branch/master/graph/badge.svg)](https://codecov.io/gh/c-bandy/aws-lambda-reply)
+[![npm version](https://badge.fury.io/js/lambda-response-template.svg)](https://badge.fury.io/js/lambda-response-template)
+[![Build Status](https://travis-ci.com/c-bandy/lambda-response-template.svg?branch=master)](https://travis-ci.com/c-bandy/lambda-response-template)
+[![codecov](https://codecov.io/gh/c-bandy/lambda-response-template/branch/master/graph/badge.svg)](https://codecov.io/gh/c-bandy/lambda-response-template)
+[![dependencies Status](https://david-dm.org/c-bandy/lambda-response-template/status.svg)](https://david-dm.org/c-bandy/lambda-response-template)
 
 >💬 A tiny utility for creating AWS Lambda response objects.
 
-This package provides an easy way for you set default headers for your lambda functions. Helps reduce clutter and make
-your output more consistent in large scale applications.
+This package provides an easy free way for you generate templates for your responses. Helps reduce clutter and make your
+output more consistent across your Lambda application.
 
 ## Install
 
 ```bash
-npm install aws-lambda-reply
+npm install lambda-response-template
 ```
+
+## Features
+
+* Templating
+  * Create templates for your responses.
+* Normalizes headers
+  * Always outputs headers with the same case.
 
 ## Why
 
 When developing large applications you often work across multiple repositories. I found myself following the same
 pattern of creating a factory in each repository every time I wanted set standards for a lambda's output. When you also
-have to add tests for this boilerplate it can quickly get annoying - this package intends to solve this problem by
-creating a first class, best version of this generic method, that is easily accessible as a module.
+have to add tests for this boilerplate it can quickly get annoying - this package aims to solve this problem by creating
+a first class, best version of this generic method, that is easily accessible as a module.
 
 ## Usage
 
-Set up aws-lambda-reply with your defaults:
+Set up lambda-response-template your defaults:
 
 ```typescript
-import { LambdaReply } from 'aws-lambda-reply';
+import { ResponseTemplate } from 'lambda-response-template';
 
-const reply = new LambdaReply({
+const reply = new ResponseTemplate({
   headers: {
     'x-powered-by': 'nodejs',
   }
@@ -40,93 +48,18 @@ And then use inside your function:
 
 ```typescript
 async function handler(event, context) {
-  return reply.make(200, '{"message": "Hello world!"}');
+  return reply.make(200, '{"message": "Hello world!"}', options);
 }
 ```
 
-Your headers will automatically be added to the response object, along with any additional options you pass.
+Your response will be made from the template, inheriting any options you set.
 
-## API
-
-```typescript
-// ES6
-import { LambdaReply } from 'aws-lambda-reply';
-
-// commonJS
-const LambdaReply = require('aws-lambda-reply').LambdaReply;
-```
-
----
+## Tips
 
 ```typescript
-const reply = new LambdaReply(defaults);
-```
+// a === b
 
->This API assumes that you name the instance `reply`, but you can call it anything you like.
+const a = reply.make(200, 'Hello world', { headers: { 'Content-Type': 'text/plain' }});
 
-### Constructor
-
-#### defaults
-
-Type: `object`
-
-Defaults for all replies made using this object.
-
-`headers` default to `{ 'Content-Type': 'application/json' }`.
-
-`multiValueHeaders` default to `{}`.
-
-```typescript
-{
-  headers?: { [key: string]: string | boolean | number },
-  multiValueHeaders?: { [key: string]: string[] }
-}
-```
-
----
-
-```typescript
-reply.make(statusCode, body, options);
-```
-
-### Params
-
-#### statusCode
-
-Type: `number`
-
-HTTP status code
-
-#### body
-
-Type: `string`
-
-The response body to return.
-
-#### options
-
-Type: `object`
-
-Add additional headers or set the response as base64 encoded.
-
-```typescript
-{
-  headers?: { [key: string]: string | boolean | number },
-  multiValueHeaders?: { [key: string]: Array<string | boolean | number> },
-  isBase64Encoded?: boolean,
-}
-```
-
-#### Returns
-
-Type: `object`
-
-```typescript
-{
-  statusCode: number,
-  body: string,
-  headers?: { [key: string]: string | boolean | number },
-  multiValueHeaders?: { [key: string]: Array<string | boolean | number> },
-  isBase64Encoded?: boolean
-}
+const b = reply.make(200, 'Hello world', 'text/plain');
 ```
