@@ -1,41 +1,58 @@
 import { APIGatewayProxyResult } from 'aws-lambda';
-import { isString, lowercaseKeys as lk } from './util';
+import { exists, isString } from './util';
+
+type Headers = NonNullable<APIGatewayProxyResult['headers']>;
+type MultiValueHeaders = NonNullable<APIGatewayProxyResult['multiValueHeaders']>;
+type TransformationFn = (value: any) => any;
 
 export interface Template {
-  headers: NonNullable<APIGatewayProxyResult['headers']>;
-  multiValueHeaders: NonNullable<APIGatewayProxyResult['multiValueHeaders']>;
-  isBase64Encoded: NonNullable<APIGatewayProxyResult['isBase64Encoded']>;
+  headers?: Headers;
+  multiValueHeaders?: MultiValueHeaders;
+  isBase64Encoded?: boolean;
 }
 
-export type ResponseOverrides = Partial<Template>;
+export interface ResponseOverrides {
+  headers?: Headers;
+  multiValueHeaders?: MultiValueHeaders;
+  isBase64Encoded?: boolean;
+  transform?: TransformationFn;
+}
+
+const callbackNoop = (value: any): any => value;
 
 export class ResponseTemplate {
-  public template: Template;
+  public headers?: Headers;
+  public multiValueHeaders?: MultiValueHeaders;
+  public isBase64Encoded?: boolean;
+  public transform?: TransformationFn;
 
-  /** Creates a template. */
-  constructor(template: Partial<Template> = {}) {
-    this.template = {
-      headers: {
-        'content-type': 'application/json',
-        ...(template.headers || {}),
-      },
-      multiValueHeaders: (template.multiValueHeaders || {}),
-      isBase64Encoded: template.isBase64Encoded || false,
-    };
+  /**
+   * Creates a template.
+   *
+   * @param transform
+   * Call this function on the response body.
+   */
+  constructor(template: Template = {}, transform?: TransformationFn) {
+    this.headers = template.headers;
+    this.multiValueHeaders = template.multiValueHeaders;
+    this.isBase64Encoded = template.isBase64Encoded;
+    this.transform = transform;
   }
 
   /**
    * Creates a response object from a template.
    *
    * @param statusCode - HTTP status code.
-   * @param body - The response body.
+   * @param body - The response body. Must have a
    * @param overrides - Override these parts of your template.
    * @param contentType - Set `Content-Type` header to this value.
    */
-  public make(statusCode: number, body?: string, overrides?: ResponseOverrides): APIGatewayProxyResult;
-  public make(statusCode: number, body?: string, contentType?: string): APIGatewayProxyResult;
-  public make(statusCode: number, body: string = '', overrideLike?: ResponseOverrides | string): APIGatewayProxyResult {
+  public make(statusCode: number, body?: any, overrides?: ResponseOverrides): APIGatewayProxyResult;
+  public make(statusCode: number, body?: any, contentType?: string): APIGatewayProxyResult;
+  public make(statusCode: number, body: any = '', overrideLike?: ResponseOverrides | string): APIGatewayProxyResult {
     let overrides: ResponseOverrides;
+    let headers: Headers | undefined;
+    let multiValueHeaders: MultiValueHeaders | undefined;
 
     // Determine if third argument is content type, undefined, or options.
     if (isString(overrideLike)) {
@@ -53,20 +70,31 @@ export class ResponseTemplate {
       overrides = {};
     }
 
+    const hasTransformer = exists(this.transform) || exists(overrides.transform);
+    if (!hasTransformer && !isString(body)) {
+      throw new Error('Attempted to call a non-string body without a transformer.');
+    }
+
+    if (exists(this.headers) || exists(overrides.headers)) {
+      headers = {
+        ...this.headers || {}, // set defaults
+        ...overrides.headers || {}, // spread specified headers
+      };
+    }
+
+    if (exists(this.multiValueHeaders) || exists(overrides.multiValueHeaders)) {
+      multiValueHeaders = {
+        ...this.multiValueHeaders || {},
+        ...overrides.multiValueHeaders || {},
+      };
+    }
+
     return {
       statusCode,
-      body,
-      headers: {
-        ...lk(this.template.headers), // set defaults
-        ...lk(overrides.headers || {}), // spread specified headers
-      },
-      multiValueHeaders: {
-        ...lk(this.template.multiValueHeaders),
-        ...lk(overrides.multiValueHeaders || {}),
-      },
-      isBase64Encoded: overrides.isBase64Encoded !== undefined ?
-        overrides.isBase64Encoded :
-        this.template.isBase64Encoded,
+      body: (overrides.transform || this.transform || callbackNoop)(body),
+      headers,
+      multiValueHeaders,
+      isBase64Encoded: overrides.isBase64Encoded || this.isBase64Encoded,
     };
   }
 }
