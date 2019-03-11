@@ -1,0 +1,11 @@
+{
+  "scripts": {
+    "beforeStart": "npm run lint && npm run test-with-coverage"
+  },
+  "github": {
+    "release": true
+  },
+  "npm": {
+    "release": true
+  }
+}
