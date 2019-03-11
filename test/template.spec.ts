@@ -1,6 +1,6 @@
 /* tslint:disable:no-unused-expression */
 
-import { expect } from 'chai';
+import { assert, expect } from 'chai';
 import { ResponseTemplate } from '../src/index';
 
 describe('Constructor', () => {
@@ -97,6 +97,6 @@ describe('make', () => {
   });
   it('should throw if non-string body is provided without a transformer', () => {
     const reply = new ResponseTemplate();
-    expect(() => { reply.make(200, {}); }).to.throw;
+    assert.throws(() => reply.make(200, {}));
   });
 });
