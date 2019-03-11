@@ -11,6 +11,9 @@
     "test": "mocha test/**/*.spec.ts",
     "test-with-coverage": "nyc npm test"
   },
+  "engines": {
+    "node" : ">=6.0.0"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/c-bandy/lambda-response-template.git"
