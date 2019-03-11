@@ -26,7 +26,9 @@ describe('Constructor', () => {
     expect(responseObject.isBase64Encoded).to.be.a('boolean').that.equals(true);
   });
   it('should transform the body', () => {
-    const reply = new ResponseTemplate(undefined, (value) => JSON.stringify(value));
+    const reply = new ResponseTemplate({
+      transform: (value) => JSON.stringify(value),
+    });
     const responseObject = reply.make(200, { message: 'hello' });
     expect(responseObject.body).to.equal('{"message":"hello"}');
   });
@@ -75,7 +77,9 @@ describe('make', () => {
       expect(responseObject.multiValueHeaders).to.be.an('object').that.deep.equals(overwrite);
     });
     it('should overwrite transformer', () => {
-      const reply = new ResponseTemplate(undefined, (value) => value.toString());
+      const reply = new ResponseTemplate({
+        transform: (value) => value.toString(),
+      });
       const responseObject = reply.make(200, 123456, { transform: () => 'weird but true'});
       expect(responseObject.body).to.equal('weird but true');
     });
@@ -100,7 +104,9 @@ describe('make', () => {
     assert.throws(() => reply.make(200, {}));
   });
   it('should throw if transformer does not return a string', () => {
-    const reply = new ResponseTemplate(undefined, () => 12345 as any);
+    const reply = new ResponseTemplate({
+      transform: () => 12345 as any,
+    });
     assert.throws(() => reply.make(200));
   });
 });

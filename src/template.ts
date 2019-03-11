@@ -10,6 +10,7 @@ export interface Template {
   headers?: Headers;
   multiValueHeaders?: MultiValueHeaders;
   isBase64Encoded?: boolean;
+  transform?: TransformationFn;
 }
 
 export interface ResponseOverrides {
@@ -33,11 +34,11 @@ export class ResponseTemplate {
    * @param transform
    * Call this function on the response body.
    */
-  constructor(template: Template = {}, transform?: TransformationFn) {
+  constructor(template: Template = {}) {
     this.headers = template.headers;
     this.multiValueHeaders = template.multiValueHeaders;
     this.isBase64Encoded = template.isBase64Encoded;
-    this.transform = transform;
+    this.transform = template.transform;
   }
 
   /**
