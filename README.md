@@ -19,9 +19,10 @@ npm install lambda-response-template
 ## Features
 
 * Templating
-  * Create templates for your responses.
-* Normalizes headers
-  * Always outputs headers with the same case.
+  * Create re-usable templates for your responses.
+* Transforming
+  * Transform your response body before returning it, removing the need to stringify your JSON responses.
+* Fully TypeScript supported
 
 ## Why
 
@@ -34,7 +35,7 @@ a first class, best version of this generic method, that is easily accessible as
 
 Set up lambda-response-template your defaults:
 
-```typescript
+```javascript
 import { ResponseTemplate } from 'lambda-response-template';
 
 const reply = new ResponseTemplate({
@@ -46,7 +47,7 @@ const reply = new ResponseTemplate({
 
 And then use inside your function:
 
-```typescript
+```javascript
 async function handler(event, context) {
   return reply.make(200, '{"message": "Hello world!"}', options);
 }
@@ -56,10 +57,22 @@ Your response will be made from the template, inheriting any options you set.
 
 ## Tips
 
-```typescript
-// a === b
-
+```javascript
 const a = reply.make(200, 'Hello world', { headers: { 'Content-Type': 'text/plain' }});
 
 const b = reply.make(200, 'Hello world', 'text/plain');
+
+// a === b
+```
+
+```javascript
+const reply = new ResponseTemplate({
+  transform: (value) => JSON.stringify(value)
+})
+
+reply.make(200, {
+  theTruth: 'Pizza cutters are a lie!'
+});
+
+// '{"theTruth":"Pizza cutters are a lie"}'
 ```
