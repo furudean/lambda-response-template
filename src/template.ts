@@ -1,9 +1,10 @@
 import { APIGatewayProxyResult } from 'aws-lambda';
+import { oneLine } from 'common-tags';
 import { exists, isString } from './util';
 
 type Headers = NonNullable<APIGatewayProxyResult['headers']>;
 type MultiValueHeaders = NonNullable<APIGatewayProxyResult['multiValueHeaders']>;
-type TransformationFn = (value: any) => any;
+type TransformationFn = (value: any) => string;
 
 export interface Template {
   headers?: Headers;
@@ -72,7 +73,7 @@ export class ResponseTemplate {
 
     const hasTransformer = exists(this.transform) || exists(overrides.transform);
     if (!hasTransformer && !isString(body)) {
-      throw new Error('Attempted to call a non-string body without a transformer.');
+      throw new Error(`Attempted to pass type '${typeof body}' as a body. The body must be a string.`);
     }
 
     if (exists(this.headers) || exists(overrides.headers)) {
@@ -89,9 +90,17 @@ export class ResponseTemplate {
       };
     }
 
+    const responseBody = (overrides.transform || this.transform || callbackNoop)(body);
+    if (!isString(responseBody)) {
+      const message = oneLine`
+        Transformation function returned type '${typeof responseBody}'. Resulting body must be a string.
+      `;
+      throw new Error(message);
+    }
+
     return {
       statusCode,
-      body: (overrides.transform || this.transform || callbackNoop)(body),
+      body: responseBody,
       headers,
       multiValueHeaders,
       isBase64Encoded: overrides.isBase64Encoded || this.isBase64Encoded,

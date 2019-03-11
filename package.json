@@ -56,6 +56,8 @@
     "typescript": "^3.2.2"
   },
   "dependencies": {
-    "@types/aws-lambda": "^8.10.20"
+    "@types/aws-lambda": "^8.10.20",
+    "@types/common-tags": "^1.8.0",
+    "common-tags": "^1.8.0"
   }
 }

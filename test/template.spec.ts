@@ -99,4 +99,8 @@ describe('make', () => {
     const reply = new ResponseTemplate();
     assert.throws(() => reply.make(200, {}));
   });
+  it('should throw if transformer does not return a string', () => {
+    const reply = new ResponseTemplate(undefined, () => 12345 as any);
+    assert.throws(() => reply.make(200));
+  });
 });
