@@ -58,7 +58,9 @@ Your response will be made from the template, inheriting any options you set.
 ## Tips
 
 ```javascript
-const a = reply.make(200, 'Hello world', { headers: { 'Content-Type': 'text/plain' }});
+const a = reply.make(200, 'Hello world', {
+  headers: { 'Content-Type': 'text/plain' }
+});
 
 const b = reply.make(200, 'Hello world', 'text/plain');
 
@@ -70,9 +72,9 @@ const reply = new ResponseTemplate({
   transform: (value) => JSON.stringify(value)
 })
 
-reply.make(200, {
+const response = reply.make(400, {
   theTruth: 'Pizza cutters are a lie!'
 });
 
-// '{"theTruth":"Pizza cutters are a lie"}'
+// response.body === '{"theTruth":"Pizza cutters are a lie"}'
 ```
