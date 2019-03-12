@@ -28,12 +28,7 @@ export class ResponseTemplate {
   public isBase64Encoded?: boolean;
   public transform?: TransformationFn;
 
-  /**
-   * Creates a template.
-   *
-   * @param transform
-   * Call this function on the response body.
-   */
+  /** Creates a template. */
   constructor(template: Template = {}) {
     this.headers = template.headers;
     this.multiValueHeaders = template.multiValueHeaders;
