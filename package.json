@@ -1,6 +1,6 @@
 {
   "name": "lambda-response-template",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "description": "💬 A tiny utility for creating AWS Lambda response objects.",
   "main": "dist/index.js",
   "scripts": {
