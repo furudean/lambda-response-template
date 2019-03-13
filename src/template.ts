@@ -23,15 +23,15 @@ export interface ResponseOverrides {
 const callbackNoop = (value: any): any => value;
 
 export class ResponseTemplate {
-  public headers?: Headers;
-  public multiValueHeaders?: MultiValueHeaders;
+  public headers: Headers;
+  public multiValueHeaders: MultiValueHeaders;
   public isBase64Encoded?: boolean;
   public transform?: TransformationFn;
 
   /** Creates a template. */
   constructor(template: Template = {}) {
-    this.headers = template.headers;
-    this.multiValueHeaders = template.multiValueHeaders;
+    this.headers = template.headers || {};
+    this.multiValueHeaders = template.multiValueHeaders || {};
     this.isBase64Encoded = template.isBase64Encoded;
     this.transform = template.transform;
   }
@@ -72,16 +72,16 @@ export class ResponseTemplate {
       throw new Error(`Attempted to pass type '${typeof body}' as a body. The body must be a string.`);
     }
 
-    if (exists(this.headers) || exists(overrides.headers)) {
+    if (Object.keys(this.headers).length || exists(overrides.headers)) {
       headers = {
-        ...this.headers || {}, // set defaults
+        ...this.headers, // set defaults
         ...overrides.headers || {}, // spread specified headers
       };
     }
 
-    if (exists(this.multiValueHeaders) || exists(overrides.multiValueHeaders)) {
+    if (Object.keys(this.multiValueHeaders).length || exists(overrides.multiValueHeaders)) {
       multiValueHeaders = {
-        ...this.multiValueHeaders || {},
+        ...this.multiValueHeaders,
         ...overrides.multiValueHeaders || {},
       };
     }
