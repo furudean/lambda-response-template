@@ -1,6 +1,6 @@
 # lambda-response-template
 
-[![npm version](https://badge.fury.io/js/lambda-response-template.svg)](https://badge.fury.io/js/lambda-response-template)
+[![npm version](https://badge.fury.io/js/lambda-response-template.svg)](https://www.npmjs.com/package/lambda-response-template)
 [![Build Status](https://travis-ci.com/c-bandy/lambda-response-template.svg?branch=master)](https://travis-ci.com/c-bandy/lambda-response-template)
 [![codecov](https://codecov.io/gh/c-bandy/lambda-response-template/branch/master/graph/badge.svg)](https://codecov.io/gh/c-bandy/lambda-response-template)
 [![dependencies Status](https://david-dm.org/c-bandy/lambda-response-template/status.svg)](https://david-dm.org/c-bandy/lambda-response-template)
