@@ -30,7 +30,10 @@ export function make(self: ResponseTemplate, statusCode: number, body: any = '',
 
   const hasTransformer = exists(self.transform) || exists(overrides.transform);
   if (!hasTransformer && !isString(body)) {
-    throw new Error(`Attempted to pass type '${typeof body}' as a body. The body must be a string.`);
+    const message = oneLine`
+      Attempted to pass type '${typeof body}' as a body. The body must be a
+      string.`;
+    throw new Error(message);
   }
 
   if (Object.keys(self.headers).length || exists(overrides.headers)) {
@@ -50,7 +53,8 @@ export function make(self: ResponseTemplate, statusCode: number, body: any = '',
   const responseBody = (overrides.transform || self.transform || callbackNoop)(body);
   if (!isString(responseBody)) {
     const message = oneLine`
-      Transformation function returned type '${typeof responseBody}'. Resulting body must be a string.
+      Transformation function returned type '${typeof responseBody}'. Resulting
+      body must be a string.
     `;
     throw new Error(message);
   }
