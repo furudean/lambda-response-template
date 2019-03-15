@@ -7,7 +7,7 @@
 
 >💬 A tiny utility for creating AWS Lambda response objects.
 
-This package provides an easy free way for you generate templates for your responses. Helps reduce clutter and make your
+This package provides an easy way for you generate templates for your responses. Increase readability and make your
 output more consistent across your Lambda application.
 
 ## Install
@@ -29,7 +29,7 @@ npm install lambda-response-template
 When developing large applications you often work across multiple repositories. I found myself following the same
 pattern of creating a factory in each repository every time I wanted set standards for a lambda's output. When you also
 have to add tests for this boilerplate it can quickly get annoying - this package aims to solve this problem by creating
-a first class, best version of this generic method, that is easily accessible as a module.
+a first class, best version of this generic method.
 
 ## Usage
 
@@ -49,7 +49,7 @@ And then use inside your function:
 
 ```javascript
 async function handler(event, context) {
-  return reply.make(200, '{"message": "Hello world!"}', options);
+  return reply.make(200, body, options);
 }
 ```
 
@@ -57,15 +57,19 @@ Your response will be made from the template, inheriting any options you set.
 
 ## Tips
 
+### Shortcut for Content-Type header
+
 ```javascript
-const a = reply.make(200, 'Hello world', {
-  headers: { 'Content-Type': 'text/plain' }
+const a = reply.make(200, body, {
+  headers: { 'content-type': 'text/plain' }
 });
 
-const b = reply.make(200, 'Hello world', 'text/plain');
+// can be written as
 
-// a === b
+const b = reply.make(200, body, 'text/plain');
 ```
+
+### Automatically stringify responses
 
 ```javascript
 const reply = new ResponseTemplate({
@@ -75,6 +79,4 @@ const reply = new ResponseTemplate({
 const response = reply.make(400, {
   theTruth: 'Pizza cutters are a lie!'
 });
-
-// response.body === '{"theTruth":"Pizza cutters are a lie"}'
 ```
