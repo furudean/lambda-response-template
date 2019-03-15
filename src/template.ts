@@ -1,26 +1,6 @@
 import { APIGatewayProxyResult } from 'aws-lambda';
-import { oneLine } from 'common-tags';
-import { exists, isString } from './util';
-
-type Headers = NonNullable<APIGatewayProxyResult['headers']>;
-type MultiValueHeaders = NonNullable<APIGatewayProxyResult['multiValueHeaders']>;
-type TransformationFn = (value: any) => string;
-
-export interface Template {
-  headers?: Headers;
-  multiValueHeaders?: MultiValueHeaders;
-  isBase64Encoded?: boolean;
-  transform?: TransformationFn;
-}
-
-export interface ResponseOverrides {
-  headers?: Headers;
-  multiValueHeaders?: MultiValueHeaders;
-  isBase64Encoded?: boolean;
-  transform?: TransformationFn;
-}
-
-const callbackNoop = (value: any): any => value;
+import { make } from './make';
+import { Headers, MultiValueHeaders, ResponseOverrides, Template, TransformationFn } from './types';
 
 export class ResponseTemplate {
   public headers: Headers;
@@ -47,59 +27,6 @@ export class ResponseTemplate {
   public make(statusCode: number, body?: any, overrides?: ResponseOverrides): APIGatewayProxyResult;
   public make(statusCode: number, body?: any, contentType?: string): APIGatewayProxyResult;
   public make(statusCode: number, body: any = '', overrideLike?: ResponseOverrides | string): APIGatewayProxyResult {
-    let overrides: ResponseOverrides;
-    let headers: Headers | undefined;
-    let multiValueHeaders: MultiValueHeaders | undefined;
-
-    // Determine if third argument is content type, undefined, or options.
-    if (isString(overrideLike)) {
-      // Is a Content-Type header
-      overrides = {
-        headers: {
-          'content-type': overrideLike as string,
-        },
-      };
-    } else if (overrideLike instanceof Object) {
-      // Is an options object.
-      overrides = overrideLike as ResponseOverrides;
-    } else {
-      // Is unknown, set as empty.
-      overrides = {};
-    }
-
-    const hasTransformer = exists(this.transform) || exists(overrides.transform);
-    if (!hasTransformer && !isString(body)) {
-      throw new Error(`Attempted to pass type '${typeof body}' as a body. The body must be a string.`);
-    }
-
-    if (Object.keys(this.headers).length || exists(overrides.headers)) {
-      headers = {
-        ...this.headers, // set defaults
-        ...overrides.headers || {}, // spread specified headers
-      };
-    }
-
-    if (Object.keys(this.multiValueHeaders).length || exists(overrides.multiValueHeaders)) {
-      multiValueHeaders = {
-        ...this.multiValueHeaders,
-        ...overrides.multiValueHeaders || {},
-      };
-    }
-
-    const responseBody = (overrides.transform || this.transform || callbackNoop)(body);
-    if (!isString(responseBody)) {
-      const message = oneLine`
-        Transformation function returned type '${typeof responseBody}'. Resulting body must be a string.
-      `;
-      throw new Error(message);
-    }
-
-    return {
-      statusCode,
-      body: responseBody,
-      headers,
-      multiValueHeaders,
-      isBase64Encoded: overrides.isBase64Encoded || this.isBase64Encoded,
-    };
+    return make(this, statusCode, body, overrideLike);
   }
 }
