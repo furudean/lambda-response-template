@@ -20,7 +20,7 @@ export class ResponseTemplate {
    * Creates a response object from a template.
    *
    * @param statusCode - HTTP status code.
-   * @param body - The response body. Must have a
+   * @param body - The response body.
    * @param overrides - Override these parts of your template.
    * @param contentType - Set `Content-Type` header to this value.
    */
