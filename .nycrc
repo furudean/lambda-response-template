@@ -1,6 +1,6 @@
 {
   "check-coverage": true,
-  "lines": 100,
+  "lines": 85,
   "per-file": true,
   "extension": [
     ".ts"
