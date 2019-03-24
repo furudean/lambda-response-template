@@ -1,7 +1,7 @@
 /* tslint:disable:no-unused-expression */
 
 import { expect } from 'chai';
-import { exists, isString } from '../src/util';
+import { isString } from '../src/util';
 
 describe('util', () => {
   describe('isString', () => {
@@ -28,23 +28,6 @@ describe('util', () => {
     it('should return false for null', () => {
       const result = isString(null);
       expect(result).to.be.false;
-    });
-  });
-  describe('exists', () => {
-    it('should return false for undefined', () => {
-      expect(exists(undefined)).to.be.false;
-    });
-    it('should return false for null', () => {
-      expect(exists(null)).to.be.false;
-    });
-    it('should return true for an empty string', () => {
-      expect(exists('')).to.be.true;
-    });
-    it('should return true for the number 0', () => {
-      expect(exists(0)).to.be.true;
-    });
-    it('should return true for an object', () => {
-      expect(exists({})).to.be.true;
     });
   });
 });

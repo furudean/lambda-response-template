@@ -2,7 +2,7 @@ import { APIGatewayProxyResult } from 'aws-lambda';
 import { oneLine } from 'common-tags';
 import { ResponseTemplate } from './template';
 import { Headers, MultiValueHeaders, ResponseOverrides } from './types';
-import { exists, isString } from './util';
+import { isString } from './util';
 
 const callbackNoop = (value: any): any => value;
 
@@ -28,7 +28,7 @@ export function make(self: ResponseTemplate, statusCode: number, body: any = '',
     overrides = {};
   }
 
-  const hasTransformer = exists(self.transform) || exists(overrides.transform);
+  const hasTransformer = ('transform' in self) || ('transform' in overrides);
   if (!hasTransformer && !isString(body)) {
     const message = oneLine`
       Attempted to pass type '${typeof body}' as a body. The body must be a
@@ -36,14 +36,14 @@ export function make(self: ResponseTemplate, statusCode: number, body: any = '',
     throw new Error(message);
   }
 
-  if (Object.keys(self.headers).length || exists(overrides.headers)) {
+  if (Object.keys(self.headers).length || ('headers' in overrides)) {
     headers = {
       ...self.headers, // set defaults
       ...overrides.headers || {}, // spread specified headers
     };
   }
 
-  if (Object.keys(self.multiValueHeaders).length || exists(overrides.multiValueHeaders)) {
+  if (Object.keys(self.multiValueHeaders).length || ('multiValueHeaders' in overrides)) {
     multiValueHeaders = {
       ...self.multiValueHeaders,
       ...overrides.multiValueHeaders || {},
