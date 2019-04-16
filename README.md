@@ -33,7 +33,7 @@ a first class, best version of this generic method.
 
 ## Usage
 
-Set up lambda-response-template your defaults:
+Set up lambda-response-template with your defaults:
 
 ```javascript
 import { ResponseTemplate } from 'lambda-response-template';
