@@ -33,6 +33,7 @@
     "http"
   ],
   "devDependencies": {
+    "@types/aws-lambda": "^8.10.24",
     "@types/chai": "^4.1.7",
     "@types/common-tags": "^1.8.0",
     "@types/mocha": "^5.2.5",
@@ -47,7 +48,6 @@
     "typescript": "^3.2.2"
   },
   "dependencies": {
-    "@types/aws-lambda": "^8.10.20",
     "common-tags": "^1.8.0"
   }
 }
