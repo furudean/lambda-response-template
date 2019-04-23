@@ -1,12 +1,12 @@
 import { APIGatewayProxyResult } from 'aws-lambda';
 import { make } from './make';
-import { Headers, MultiValueHeaders, ResponseOverrides, Template, TransformationFn } from './types';
+import { Headers, MultiValueHeaders, ResponseOverrides, Template } from './types';
 
 export class ResponseTemplate {
   public headers: Headers;
   public multiValueHeaders: MultiValueHeaders;
   public isBase64Encoded?: boolean;
-  public transform?: TransformationFn;
+  public transform?: (...args: any) => string;
 
   /** Creates a template. */
   constructor(template: Template = {}) {

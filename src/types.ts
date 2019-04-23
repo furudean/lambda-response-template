@@ -1,6 +1,6 @@
 import { APIGatewayProxyResult } from 'aws-lambda';
 
-export type TransformationFn = (value: any) => string;
+type TransformationFn = (...args: any) => string;
 export type Headers = NonNullable<APIGatewayProxyResult['headers']>;
 export type MultiValueHeaders = NonNullable<APIGatewayProxyResult['multiValueHeaders']>;
 
