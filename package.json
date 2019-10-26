@@ -19,7 +19,7 @@
     "url": "git+https://github.com/c-bandy/lambda-response-template.git"
   },
   "author": "Cassidy Bandy",
-  "license": "Apache-2.0",
+  "license": "Unlicense",
   "bugs": {
     "url": "https://github.com/c-bandy/lambda-response-template/issues"
   },
